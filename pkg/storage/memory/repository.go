@@ -17,11 +17,11 @@ func New() *Storage {
 }
 
 // UpsertApp persists the given app metadata to storage
-func (s *Storage) UpsertApp(app *models.AppMetadata) error {
+func (s *Storage) UpsertApp(app *models.AppMetadata) (err error) {
 	s.Lock()
 	defer s.Unlock()
-	s.apps[app.Title+app.Version] = *app
-	return nil
+	s.apps[app.Title+"@"+app.Version] = *app
+	return err
 }
 
 // GetApps retrieves apps metadata

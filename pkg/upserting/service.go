@@ -26,6 +26,5 @@ func NewService(r Repository) Service {
 
 // UpsertApp persists the given app metadata to storage
 func (s *service) UpsertApp(app *models.AppMetadata) error {
-	// TODO add validation
 	return s.repo.UpsertApp(app)
 }
