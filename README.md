@@ -1,4 +1,8 @@
-
+### Run Server
+```
+cd cmd/server
+go run .
+```
 
 ### Add or modify app metadata
 ```
