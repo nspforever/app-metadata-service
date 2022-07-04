@@ -1,0 +1,16 @@
+title: Valid App3
+version: 3.0.1
+maintainer:
+- name: AppThree 1st Maintainer
+  email: appthree_1st@hotmail.com
+- name: AppThree 2nd Maintainer
+  email: appthree_2nd@hotmail.com
+- name: AppThree 3rd Maintainer
+  email: appthree_3rd@hotmail.com
+company: Upbound Inc
+website: https://upbound.io
+source: https://github.com/upbound/repo
+license: Apache-2.0
+description: |
+  ### Why app 3 is the better
+  Because it is cooler...

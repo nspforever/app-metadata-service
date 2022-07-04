@@ -1,0 +1,11 @@
+title: App w/ missing version
+maintainer:
+- name: first last
+  email: email@hotmail.com
+company: Company Inc
+website: https://website.com
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Blob of markdown
+  More markdown
