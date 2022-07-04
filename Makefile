@@ -65,4 +65,5 @@ imports:
 
 mock:
 	$(MOCKGEN) -source=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/upserting/service.go -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/upserting/mock_upserter.go -package=upserting
+	$(MOCKGEN) -source=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/listing/service.go -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/listing/mock_lister.go -package=listing
 

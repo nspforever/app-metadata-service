@@ -1,0 +1,141 @@
+version: 0.0.1
+maintainer:
+- name: firstmaintainer app1
+  email: firstmaintainer@hotmail.com
+company: Random Inc
+website: https://website.com
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Invalid App2 without version
+maintainer:
+- name: firstmaintainer app1
+  email: firstmaintainer@hotmail.com
+company: Random Inc
+website: https://website.com
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Valid App3 without maintainer
+version: 0.0.1
+company: Random Inc
+website: https://website.com
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Invalid App4 without company
+version: 0.0.1
+maintainer:
+- name: firstmaintainer app1
+  email: firstmaintainer@hotmail.com
+website: https://website.com
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Invalid App5 without website
+version: 0.0.1
+maintainer:
+- name: firstmaintainer app1
+  email: firstmaintainer@hotmail.com
+company: Random Inc
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Invalid App6 without source
+version: 0.0.1
+maintainer:
+- name: firstmaintainer app1
+  email: firstmaintainer@hotmail.com
+company: Random Inc
+website: https://website.com
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Invalid App7 without license
+version: 0.0.1
+maintainer:
+- name: firstmaintainer app1
+  email: firstmaintainer@hotmail.com
+company: Random Inc
+website: https://website.com
+source: https://github.com/random/repo
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Invalid App8 without description
+version: 0.0.1
+maintainer:
+- name: firstmaintainer app1
+  email: firstmaintainer@hotmail.com
+company: Random Inc
+website: https://website.com
+license: Apache-2.0
+source: https://github.com/random/repo
+---
+title: Invalid App9 with wrong email format
+version: 0.0.1
+maintainer:
+- name: firstmaintainer app1
+  email: firstmaintainerhotmail.com
+company: Random Inc
+website: https://website.com
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Invalid App10 with wrong source url
+version: 0.0.1
+maintainer:
+- name: firstmaintainer app1
+  email: firstmaintainer@hotmail.com
+company: Random Inc
+website: website.com
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Invalid App11 without maintainer name
+version: 0.0.1
+maintainer:
+- email: firstmaintainer@hotmail.com
+company: Random Inc
+website: https://website.com
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description
+---
+title: Invalid App12 without maintainer name
+version: 0.0.1
+maintainer:
+- name: firstmaintainer app1
+company: Random Inc
+website: https://website.com
+source: https://github.com/random/repo
+license: Apache-2.0
+description: |
+  ### Interesting Title,
+  Some application content, and description

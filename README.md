@@ -11,6 +11,8 @@
 #### API signature
 
 ### List apps
+/apps?limit=?&offset=?
+
 
 #### supported filter
 
@@ -86,7 +88,7 @@ curl localhost:9999/apps
 - Validation on version number
 - Search by sematic version number
 - Add dependency injection
-- Support pagination
+- Support pagination and sort
 - Support 'or' filters for listing API
 - Benchmark test for the API
 - Enable CI/CD

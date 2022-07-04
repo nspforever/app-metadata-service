@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -45,10 +46,11 @@ func (h *Handler) getApps(c *gin.Context) {
 }
 
 func (h *Handler) upsertApps(c *gin.Context) {
-
+	fmt.Println("***************************1")
 	var newApp models.AppMetadata
 
 	if err := c.ShouldBind(&newApp); err != nil {
+		fmt.Println("***************************2", err)
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "invalid app metadata " + err.Error()})
 		return
 	}
