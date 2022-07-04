@@ -48,7 +48,7 @@ func (h *Handler) upsertApps(c *gin.Context) {
 
 	var newApp models.AppMetadata
 
-	if err := c.ShouldBindYAML(&newApp); err != nil {
+	if err := c.ShouldBind(&newApp); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "invalid app metadata " + err.Error()})
 		return
 	}
