@@ -46,7 +46,6 @@ func TestUpsertApp(t *testing.T) {
 				})
 			})
 		})
-		So(1, ShouldEqual, 1)
 	})
 }
 

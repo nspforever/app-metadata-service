@@ -1,5 +1,9 @@
 MAIN_PKG:=app-metadata-service
 BIN=$(strip $(MAIN_PKG))
+MOCKGEN=$(GOPATH)/bin/mockgen
+MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+CUR_DIR := $(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
+MOCK_DIR=$(CUR_DIR)/pkg/mocks
 
 GO_FILES=$(shell find . -type f -name '*.go' -not -path "./vendor/*")
 
@@ -58,3 +62,7 @@ clean:
 .PHONY: imports
 imports:
 	goimports -w $(GO_FILES)
+
+mock:
+	$(MOCKGEN) -source=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/upserting/service.go -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/upserting/mock_upserter.go -package=upserting
+

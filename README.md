@@ -89,4 +89,5 @@ curl localhost:9999/apps
 - Support pagination
 - Support 'or' filters for listing API
 - Benchmark test for the API
+- Enable CI/CD
 
