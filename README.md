@@ -85,10 +85,6 @@ curl http://localhost:9999/apps\?maintainer_has_email\=firstmaintainer%40hotmail
 
 ```
 
-### TODO
-- options pattern
-- query filter design
-
 ### Future TODO
 - Validation on version number
 - Search by sematic version number
