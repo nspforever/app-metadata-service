@@ -11,6 +11,7 @@ import (
 	"github.com/nspforever/app-metadata-service/pkg/upserting"
 )
 
+// Handler repesents a http handler
 type Handler struct {
 	router   *gin.Engine
 	address  string
@@ -18,6 +19,7 @@ type Handler struct {
 	searcher searching.Service
 }
 
+// NewHandler initialize an http handler
 func NewHandler(address string, upserter upserting.Service, searcher searching.Service) *Handler {
 	h := &Handler{
 		address:  address,
@@ -31,6 +33,7 @@ func NewHandler(address string, upserter upserting.Service, searcher searching.S
 	return h
 }
 
+// Run starts the http server
 func (h *Handler) Run() {
 	h.router.Run(h.address)
 }

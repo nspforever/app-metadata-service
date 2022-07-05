@@ -1,5 +1,6 @@
 package models
 
+// AppMetadata represents application metadata
 type AppMetadata struct {
 	Title       string       `json:"title" yaml:"title" binding:"required"`
 	Version     string       `json:"version" yaml:"version" binding:"required"`

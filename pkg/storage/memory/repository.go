@@ -8,14 +8,16 @@ import (
 	"github.com/nspforever/app-metadata-service/pkg/models"
 )
 
+// ErrAppNotFound is returned by GetApps when no app metadata is found
 var ErrAppNotFound = errors.New("No app found")
 
-// Memory storage keeps data in memory
+// Storage keeps data in memory
 type Storage struct {
 	sync.RWMutex
 	apps map[string]models.AppMetadata
 }
 
+// New creates new storage instance
 func New() *Storage {
 	return &Storage{apps: make(map[string]models.AppMetadata)}
 }
@@ -25,7 +27,7 @@ func (s *Storage) UpsertApp(app *models.AppMetadata) (err error) {
 	s.Lock()
 	defer s.Unlock()
 	s.apps[app.Title+"@"+app.Version] = *app
-	return err
+	return
 }
 
 // GetApps retrieves apps metadata
@@ -42,5 +44,5 @@ func (s *Storage) GetApps(filters *app.Filters) (apps []models.AppMetadata, err 
 	if len(apps) == 0 {
 		err = ErrAppNotFound
 	}
-	return apps, err
+	return
 }

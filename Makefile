@@ -57,11 +57,15 @@ vet:
 
 .PHONY: clean
 clean:
-	@rm -rf .gen bin mocks
+	@rm -rf bin mocks
 
 .PHONY: imports
 imports:
 	goimports -w $(GO_FILES)
+
+.PHONY: lint
+lint:
+	golint ./...
 
 mock:
 	$(MOCKGEN) -source=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/upserting/service.go -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/upserting/mock_upserter.go -package=upserting
