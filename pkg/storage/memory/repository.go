@@ -8,7 +8,7 @@ import (
 	"github.com/nspforever/app-metadata-service/pkg/models"
 )
 
-var errAppNotFound = errors.New("No app found")
+var ErrAppNotFound = errors.New("No app found")
 
 // Memory storage keeps data in memory
 type Storage struct {
@@ -40,7 +40,7 @@ func (s *Storage) GetApps(filters *app.Filters) (apps []models.AppMetadata, err 
 		apps = append(apps, app)
 	}
 	if len(apps) == 0 {
-		err = errAppNotFound
+		err = ErrAppNotFound
 	}
 	return apps, err
 }

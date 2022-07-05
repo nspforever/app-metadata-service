@@ -50,7 +50,7 @@ func TestUpsertApp(t *testing.T) {
 	})
 }
 
-func TestConcurrentUpsertApps(t *testing.T) {
+func TestConcurrent(t *testing.T) {
 	Convey("Test upsert apps concurrently", t, func() {
 		appsWanted := 1000
 		s := New()
