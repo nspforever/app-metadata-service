@@ -14,7 +14,7 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 	"gopkg.in/yaml.v3"
 
-	//mocks_listing "github.com/nspforever/app-metadata-service/pkg/mocks/listing"
+	//mocks_searching "github.com/nspforever/app-metadata-service/pkg/mocks/searching"
 	mocks_upserting "github.com/nspforever/app-metadata-service/pkg/mocks/upserting"
 	"github.com/nspforever/app-metadata-service/pkg/models"
 )
@@ -51,7 +51,7 @@ description: |
 }`
 )
 
-func TestUpsertAppHappyPath(t *testing.T) {
+func TestUpsertApp(t *testing.T) {
 	Convey("Test upsert app", t, func() {
 		// Test Setup
 		ctrl := gomock.NewController(t)

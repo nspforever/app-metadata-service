@@ -1,18 +1,19 @@
-package listing
+package searching
 
 import (
+	"github.com/nspforever/app-metadata-service/pkg/filtering/app"
 	"github.com/nspforever/app-metadata-service/pkg/models"
 )
 
 // Service provides app listing operations.
 type Service interface {
-	GetApps() ([]models.AppMetadata, error)
+	SearchApps(filters *app.Filters) ([]models.AppMetadata, error)
 }
 
 // Repository provides access to app metadata repository.
 type Repository interface {
 	// GetApps retrieve apps metadata from the repository.
-	GetApps() ([]models.AppMetadata, error)
+	GetApps(filters *app.Filters) ([]models.AppMetadata, error)
 }
 
 type service struct {
@@ -25,7 +26,6 @@ func NewService(r Repository) Service {
 }
 
 // GetApps retrieves apps metadata
-func (s *service) GetApps() (apps []models.AppMetadata, err error) {
-	// TODO add validation
-	return s.repo.GetApps()
+func (s *service) SearchApps(filters *app.Filters) (apps []models.AppMetadata, err error) {
+	return s.repo.GetApps(filters)
 }

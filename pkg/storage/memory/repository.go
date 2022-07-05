@@ -1,10 +1,14 @@
 package memory
 
 import (
+	"errors"
 	"sync"
 
+	"github.com/nspforever/app-metadata-service/pkg/filtering/app"
 	"github.com/nspforever/app-metadata-service/pkg/models"
 )
+
+var errAppNotFound = errors.New("No app found")
 
 // Memory storage keeps data in memory
 type Storage struct {
@@ -25,13 +29,18 @@ func (s *Storage) UpsertApp(app *models.AppMetadata) (err error) {
 }
 
 // GetApps retrieves apps metadata
-func (s *Storage) GetApps() (apps []models.AppMetadata, err error) {
+func (s *Storage) GetApps(filters *app.Filters) (apps []models.AppMetadata, err error) {
 	s.RLock()
 	defer s.RUnlock()
 
 	for _, app := range s.apps {
+		if !filters.Apply(app) {
+			continue
+		}
 		apps = append(apps, app)
 	}
-
+	if len(apps) == 0 {
+		err = errAppNotFound
+	}
 	return apps, err
 }

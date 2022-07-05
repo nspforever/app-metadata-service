@@ -11,7 +11,7 @@
 #### API signature
 
 ### List apps
-/apps?limit=?&offset=?
+GET /apps?title=app1
 
 
 #### supported filter
@@ -72,12 +72,15 @@ description has, eq
 
 
 ```
-curl -X PUT --data-binary @test-data/invalid_app1.yaml -H "Content-type: application/x-yaml" http://localhost:9999/apps
+curl -X PUT --data-binary @test-data/app1.yaml -H "Content-type: application/x-yaml" http://localhost:9999/apps
 ```
 
 ### List apps
 ```
 curl localhost:9999/apps
+
+curl http://localhost:9999/apps\?title\=Valid%20App1
+
 ```
 
 ### TODO

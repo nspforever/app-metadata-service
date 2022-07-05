@@ -5,6 +5,7 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/nspforever/app-metadata-service/pkg/filtering/app"
 	"github.com/nspforever/app-metadata-service/pkg/models"
 	. "github.com/smartystreets/goconvey/convey"
 )
@@ -64,7 +65,7 @@ func TestConcurrentUpsertApps(t *testing.T) {
 					Company: "Upbound Inc.",
 				}
 				s.UpsertApp(newApp)
-				s.GetApps()
+				s.GetApps(&app.Filters{})
 				wg.Done()
 			}(i)
 		}
