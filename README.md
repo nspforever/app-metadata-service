@@ -81,6 +81,8 @@ curl localhost:9999/apps
 
 curl http://localhost:9999/apps\?title\=Valid%20App1
 
+curl http://localhost:9999/apps\?maintainer_has_email\=firstmaintainer%40hotmail.com\&company\=Random%20Inc\&license\=Apache-2.0
+
 ```
 
 ### TODO
