@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/martian/log"
 
 	"github.com/nspforever/app-metadata-service/pkg/filtering/app"
 	"github.com/nspforever/app-metadata-service/pkg/models"
@@ -43,10 +44,12 @@ func (h *Handler) upsertApps(c *gin.Context) {
 
 	if err := c.ShouldBind(&newApp); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "invalid app metadata " + err.Error()})
+		log.Errorf("invalid app metadata %+v \n", err)
 		return
 	}
 	if err := h.upserter.UpsertApp(&newApp); err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		log.Errorf("failed to persist app metadata %+v\n", err)
 		return
 	}
 	c.Status(http.StatusOK)
@@ -56,18 +59,21 @@ func (h *Handler) searchApps(c *gin.Context) {
 	params := make(map[string]string)
 	if err := c.BindQuery(&params); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		log.Errorf("malform search filter %+v\n", err)
 		return
 	}
 
 	filters, err := getFilters(params)
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		log.Errorf("error: %+v\n", err)
 		return
 	}
 
 	apps, err := h.searcher.SearchApps(filters)
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": err.Error()})
+		log.Errorf("an error returned by app searcher %+v\n", err)
 		return
 	}
 

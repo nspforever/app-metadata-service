@@ -38,6 +38,9 @@ test-package:
 test-func:
 	go test -v $(P) -run ^$(T)$$ -coverprofile=taskplanner_coverage.out
 
+smoke-test: deps
+	go test --tags=smoke -v github.com/nspforever/app-metadata-service/pkg/tests
+
 coverage: deps
 	gocov test ./... > $(CURDIR)/coverage.out 2>/dev/null
 	gocov report $(CURDIR)/coverage.out
