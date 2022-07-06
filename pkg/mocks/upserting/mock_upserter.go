@@ -5,35 +5,36 @@
 package upserting
 
 import (
+	reflect "reflect"
+
 	gomock "github.com/golang/mock/gomock"
 	models "github.com/nspforever/app-metadata-service/pkg/models"
-	reflect "reflect"
 )
 
-// MockService is a mock of Service interface
+// MockService is a mock of Service interface.
 type MockService struct {
 	ctrl     *gomock.Controller
 	recorder *MockServiceMockRecorder
 }
 
-// MockServiceMockRecorder is the mock recorder for MockService
+// MockServiceMockRecorder is the mock recorder for MockService.
 type MockServiceMockRecorder struct {
 	mock *MockService
 }
 
-// NewMockService creates a new mock instance
+// NewMockService creates a new mock instance.
 func NewMockService(ctrl *gomock.Controller) *MockService {
 	mock := &MockService{ctrl: ctrl}
 	mock.recorder = &MockServiceMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockService) EXPECT() *MockServiceMockRecorder {
 	return m.recorder
 }
 
-// UpsertApp mocks base method
+// UpsertApp mocks base method.
 func (m *MockService) UpsertApp(arg0 *models.AppMetadata) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpsertApp", arg0)
@@ -41,36 +42,36 @@ func (m *MockService) UpsertApp(arg0 *models.AppMetadata) error {
 	return ret0
 }
 
-// UpsertApp indicates an expected call of UpsertApp
+// UpsertApp indicates an expected call of UpsertApp.
 func (mr *MockServiceMockRecorder) UpsertApp(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpsertApp", reflect.TypeOf((*MockService)(nil).UpsertApp), arg0)
 }
 
-// MockRepository is a mock of Repository interface
+// MockRepository is a mock of Repository interface.
 type MockRepository struct {
 	ctrl     *gomock.Controller
 	recorder *MockRepositoryMockRecorder
 }
 
-// MockRepositoryMockRecorder is the mock recorder for MockRepository
+// MockRepositoryMockRecorder is the mock recorder for MockRepository.
 type MockRepositoryMockRecorder struct {
 	mock *MockRepository
 }
 
-// NewMockRepository creates a new mock instance
+// NewMockRepository creates a new mock instance.
 func NewMockRepository(ctrl *gomock.Controller) *MockRepository {
 	mock := &MockRepository{ctrl: ctrl}
 	mock.recorder = &MockRepositoryMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
-// UpsertApp mocks base method
+// UpsertApp mocks base method.
 func (m *MockRepository) UpsertApp(arg0 *models.AppMetadata) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpsertApp", arg0)
@@ -78,7 +79,7 @@ func (m *MockRepository) UpsertApp(arg0 *models.AppMetadata) error {
 	return ret0
 }
 
-// UpsertApp indicates an expected call of UpsertApp
+// UpsertApp indicates an expected call of UpsertApp.
 func (mr *MockRepositoryMockRecorder) UpsertApp(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpsertApp", reflect.TypeOf((*MockRepository)(nil).UpsertApp), arg0)

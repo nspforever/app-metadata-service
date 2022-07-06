@@ -30,35 +30,35 @@ func (f *Filters) Apply(app models.AppMetadata) bool {
 		return true
 	}
 
-	if !f.Title.apply(app) {
+	if !f.Title.Apply(app) {
 		return false
 	}
 
-	if !f.Version.apply(app) {
+	if !f.Version.Apply(app) {
 		return false
 	}
 
-	if !f.Maintainer.apply(app) {
+	if !f.Maintainer.Apply(app) {
 		return false
 	}
 
-	if !f.Company.apply(app) {
+	if !f.Company.Apply(app) {
 		return false
 	}
 
-	if !f.Website.apply(app) {
+	if !f.Website.Apply(app) {
 		return false
 	}
 
-	if !f.Source.apply(app) {
+	if !f.Source.Apply(app) {
 		return false
 	}
 
-	if !f.License.apply(app) {
+	if !f.License.Apply(app) {
 		return false
 	}
 
-	if !f.Description.apply(app) {
+	if !f.Description.Apply(app) {
 		return false
 	}
 
@@ -69,7 +69,7 @@ type Title struct {
 	Equal string
 }
 
-func (t *Title) apply(app models.AppMetadata) bool {
+func (t *Title) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
 	}
@@ -84,7 +84,7 @@ type Version struct {
 	Equal string
 }
 
-func (v *Version) apply(app models.AppMetadata) bool {
+func (v *Version) Apply(app models.AppMetadata) bool {
 	if v == nil {
 		return true
 	}
@@ -101,7 +101,7 @@ type Maintainer struct {
 	HasEmail string
 }
 
-func (m *Maintainer) apply(app models.AppMetadata) bool {
+func (m *Maintainer) Apply(app models.AppMetadata) bool {
 	if m == nil {
 		return true
 	}
@@ -119,7 +119,7 @@ type Company struct {
 	Equal string
 }
 
-func (t *Company) apply(app models.AppMetadata) bool {
+func (t *Company) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
 	}
@@ -134,7 +134,7 @@ type Website struct {
 	Equal string
 }
 
-func (t *Website) apply(app models.AppMetadata) bool {
+func (t *Website) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
 	}
@@ -149,7 +149,7 @@ type Source struct {
 	Equal string
 }
 
-func (t *Source) apply(app models.AppMetadata) bool {
+func (t *Source) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
 	}
@@ -164,7 +164,7 @@ type License struct {
 	Equal string
 }
 
-func (t *License) apply(app models.AppMetadata) bool {
+func (t *License) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
 	}
@@ -179,7 +179,7 @@ type Description struct {
 	HasText string
 }
 
-func (d *Description) apply(app models.AppMetadata) bool {
+func (d *Description) Apply(app models.AppMetadata) bool {
 	if d == nil {
 		return true
 	}

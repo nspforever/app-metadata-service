@@ -6,20 +6,29 @@ import (
 
 	"github.com/nspforever/app-metadata-service/pkg/filtering/app"
 	"github.com/nspforever/app-metadata-service/pkg/models"
+	"github.com/nspforever/app-metadata-service/pkg/storage/memory/query"
 )
 
 // ErrAppNotFound is returned by GetApps when no app metadata is found
 var ErrAppNotFound = errors.New("No app found")
 
+type appFiltersApplier interface {
+	Apply(filters *app.Filters, app models.AppMetadata) bool
+}
+
 // Storage keeps data in memory
 type Storage struct {
 	sync.RWMutex
-	apps map[string]models.AppMetadata
+	apps              map[string]models.AppMetadata
+	appFiltersApplier appFiltersApplier
 }
 
 // New creates new storage instance
 func New() *Storage {
-	return &Storage{apps: make(map[string]models.AppMetadata)}
+	return &Storage{
+		apps:              make(map[string]models.AppMetadata),
+		appFiltersApplier: &query.SimpleAppFiltersApplier{},
+	}
 }
 
 // UpsertApp persists the given app metadata to storage
@@ -36,13 +45,15 @@ func (s *Storage) GetApps(filters *app.Filters) (apps []models.AppMetadata, err 
 	defer s.RUnlock()
 
 	for _, app := range s.apps {
-		if !filters.Apply(app) {
+		if !s.appFiltersApplier.Apply(filters, app) {
 			continue
 		}
 		apps = append(apps, app)
 	}
+
 	if len(apps) == 0 {
 		err = ErrAppNotFound
 	}
+
 	return
 }

@@ -5,36 +5,37 @@
 package searching
 
 import (
+	reflect "reflect"
+
 	gomock "github.com/golang/mock/gomock"
 	app "github.com/nspforever/app-metadata-service/pkg/filtering/app"
 	models "github.com/nspforever/app-metadata-service/pkg/models"
-	reflect "reflect"
 )
 
-// MockService is a mock of Service interface
+// MockService is a mock of Service interface.
 type MockService struct {
 	ctrl     *gomock.Controller
 	recorder *MockServiceMockRecorder
 }
 
-// MockServiceMockRecorder is the mock recorder for MockService
+// MockServiceMockRecorder is the mock recorder for MockService.
 type MockServiceMockRecorder struct {
 	mock *MockService
 }
 
-// NewMockService creates a new mock instance
+// NewMockService creates a new mock instance.
 func NewMockService(ctrl *gomock.Controller) *MockService {
 	mock := &MockService{ctrl: ctrl}
 	mock.recorder = &MockServiceMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockService) EXPECT() *MockServiceMockRecorder {
 	return m.recorder
 }
 
-// SearchApps mocks base method
+// SearchApps mocks base method.
 func (m *MockService) SearchApps(filters *app.Filters) ([]models.AppMetadata, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SearchApps", filters)
@@ -43,36 +44,36 @@ func (m *MockService) SearchApps(filters *app.Filters) ([]models.AppMetadata, er
 	return ret0, ret1
 }
 
-// SearchApps indicates an expected call of SearchApps
+// SearchApps indicates an expected call of SearchApps.
 func (mr *MockServiceMockRecorder) SearchApps(filters interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchApps", reflect.TypeOf((*MockService)(nil).SearchApps), filters)
 }
 
-// MockRepository is a mock of Repository interface
+// MockRepository is a mock of Repository interface.
 type MockRepository struct {
 	ctrl     *gomock.Controller
 	recorder *MockRepositoryMockRecorder
 }
 
-// MockRepositoryMockRecorder is the mock recorder for MockRepository
+// MockRepositoryMockRecorder is the mock recorder for MockRepository.
 type MockRepositoryMockRecorder struct {
 	mock *MockRepository
 }
 
-// NewMockRepository creates a new mock instance
+// NewMockRepository creates a new mock instance.
 func NewMockRepository(ctrl *gomock.Controller) *MockRepository {
 	mock := &MockRepository{ctrl: ctrl}
 	mock.recorder = &MockRepositoryMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
-// GetApps mocks base method
+// GetApps mocks base method.
 func (m *MockRepository) GetApps(filters *app.Filters) ([]models.AppMetadata, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetApps", filters)
@@ -81,7 +82,7 @@ func (m *MockRepository) GetApps(filters *app.Filters) ([]models.AppMetadata, er
 	return ret0, ret1
 }
 
-// GetApps indicates an expected call of GetApps
+// GetApps indicates an expected call of GetApps.
 func (mr *MockRepositoryMockRecorder) GetApps(filters interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetApps", reflect.TypeOf((*MockRepository)(nil).GetApps), filters)
