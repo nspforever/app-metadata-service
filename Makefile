@@ -1,73 +1,77 @@
 MAIN_PKG:=app-metadata-service
 BIN=$(strip $(MAIN_PKG))
 MOCKGEN=$(GOPATH)/bin/mockgen
-MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-CUR_DIR := $(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
-MOCK_DIR=$(CUR_DIR)/pkg/mocks
+MOCK_DIR=$(CURDIR)/pkg/mocks
 
 GO_FILES=$(shell find . -type f -name '*.go' -not -path "./vendor/*")
 
-# mac only
-.PHONY: dep-install
-dep-install:
-ifeq ($(OS), Darwin)
-	@which goimports > /dev/null || go get -u golang.org/x/tools/cmd/goimports
-	@which gosumcheck > /dev/null || go get -u golang.org/x/mod/gosumcheck
-	@go get github.com/golang/mock/mockgen@latest
-	@echo 'all dependencies installed, you are good to go'
-endif
+clean:
+	@rm -rf bin *.out
 
-# download mod package
-init:
+tools:
+	go get golang.org/x/tools/cmd/goimports
+	go get github.com/kisielk/errcheck
+	go get github.com/axw/gocov/gocov
+	go get github.com/matm/gocov-html
+	go get github.com/tools/godep
+	go get github.com/mitchellh/gox
+	go get github.com/golang/mock/mockgen@latest
+
+deps:
 	go mod download
 	go mod tidy
 
-.PHONY: install
-install:
-	go mod tidy
-	go install -v ./...
-
-
-build: init
+build: deps
 	go build -o bin/$(BIN) github.com/nspforever/$(MAIN_PKG)/cmd/server
 
 run: build
 	bin/$(BIN)
 
-test: init
+test: deps
 	go test -v -coverprofile=$(BIN).out ./...
 
 # example: make test-package P=github.com/nspforever/app-metadata-service/pkg/storage/memory
-.PHONY: test-package
 test-package:
 	go test -v $(P) -coverprofile=$(BIN).out
 
 # example: make test-func P=github.com/nspforever/app-metadata-service/pkg/storage/memory T=TestUpsertApp
-.PHONY: test-func
 test-func:
 	go test -v $(P) -run ^$(T)$$ -coverprofile=taskplanner_coverage.out
 
-.PHONY: fmt
-fmt:
-	@go fmt ./...
+coverage: deps
+	gocov test ./... > $(CURDIR)/coverage.out 2>/dev/null
+	gocov report $(CURDIR)/coverage.out
+	if test -z "$$CI"; then \
+	  gocov-html $(CURDIR)/coverage.out > $(CURDIR)/coverage.html; \
+	  if which open &>/dev/null; then \
+	    open $(CURDIR)/coverage.html; \
+	  fi; \
+	fi
 
-.PHONY: vet
 vet:
 	@go vet ./...
 
-.PHONY: clean
-clean:
-	@rm -rf bin mocks
+errors:
+	errcheck -ignoretests -blank ./...
 
-.PHONY: imports
-imports:
-	goimports -w $(GO_FILES)
-
-.PHONY: lint
 lint:
 	golint ./...
 
-mock:
-	$(MOCKGEN) -source=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/upserting/service.go -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/upserting/mock_upserter.go -package=upserting
-	$(MOCKGEN) -source=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/searching/service.go -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/searching/mock_searcher.go -package=searching
+imports:
+	goimports -l -w .
 
+fmt:
+	@go fmt ./...
+
+mock:
+	$(MOCKGEN) -source=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/upserting/service.go \
+						 -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/upserting/mock_upserter.go \
+						 -package=upserting
+	$(MOCKGEN) -source=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/searching/service.go \
+						 -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/searching/mock_searcher.go \
+						 -package=searching
+	$(MOCKGEN) -source=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/storage/memory/repository.go \
+						 -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/storage/memory/mock_apps_filters_applier.go \
+						 -package=memory
+
+pre-checkin: lint fmt vet errors imports build test
