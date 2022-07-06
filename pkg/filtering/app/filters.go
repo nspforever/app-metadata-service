@@ -6,6 +6,7 @@ import (
 	"github.com/nspforever/app-metadata-service/pkg/models"
 )
 
+// Filters represents the filters
 type Filters struct {
 	Title       *Title
 	Version     *Version
@@ -17,6 +18,7 @@ type Filters struct {
 	Description *Description
 }
 
+// NewFilters is a constructor function for *Filters
 func NewFilters(opts ...FilterOption) *Filters {
 	filters := &Filters{}
 	for _, opt := range opts {
@@ -25,50 +27,12 @@ func NewFilters(opts ...FilterOption) *Filters {
 	return filters
 }
 
-func (f *Filters) Apply(app models.AppMetadata) bool {
-	if f == nil {
-		return true
-	}
-
-	if !f.Title.Apply(app) {
-		return false
-	}
-
-	if !f.Version.Apply(app) {
-		return false
-	}
-
-	if !f.Maintainer.Apply(app) {
-		return false
-	}
-
-	if !f.Company.Apply(app) {
-		return false
-	}
-
-	if !f.Website.Apply(app) {
-		return false
-	}
-
-	if !f.Source.Apply(app) {
-		return false
-	}
-
-	if !f.License.Apply(app) {
-		return false
-	}
-
-	if !f.Description.Apply(app) {
-		return false
-	}
-
-	return true
-}
-
+// Title filter
 type Title struct {
 	Equal string
 }
 
+// Apply returns true if app metadata meets the criteria
 func (t *Title) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
@@ -80,10 +44,12 @@ func (t *Title) Apply(app models.AppMetadata) bool {
 	return true
 }
 
+// Version filter
 type Version struct {
 	Equal string
 }
 
+// Apply returns true if app metadata meets the criteria
 func (v *Version) Apply(app models.AppMetadata) bool {
 	if v == nil {
 		return true
@@ -96,11 +62,13 @@ func (v *Version) Apply(app models.AppMetadata) bool {
 	return true
 }
 
+// Maintainer filter
 type Maintainer struct {
 	HasName  string
 	HasEmail string
 }
 
+// Apply returns true if app metadata meets the criteria
 func (m *Maintainer) Apply(app models.AppMetadata) bool {
 	if m == nil {
 		return true
@@ -115,10 +83,12 @@ func (m *Maintainer) Apply(app models.AppMetadata) bool {
 	return false
 }
 
+// Company filter
 type Company struct {
 	Equal string
 }
 
+// Apply returns true if app metadata meets the criteria
 func (t *Company) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
@@ -130,10 +100,12 @@ func (t *Company) Apply(app models.AppMetadata) bool {
 	return true
 }
 
+// Website filter
 type Website struct {
 	Equal string
 }
 
+// Apply returns true if app metadata meets the criteria
 func (t *Website) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
@@ -145,10 +117,12 @@ func (t *Website) Apply(app models.AppMetadata) bool {
 	return true
 }
 
+// Source filter
 type Source struct {
 	Equal string
 }
 
+// Apply returns true if app metadata meets the criteria
 func (t *Source) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
@@ -160,10 +134,12 @@ func (t *Source) Apply(app models.AppMetadata) bool {
 	return true
 }
 
+// License filter
 type License struct {
 	Equal string
 }
 
+// Apply returns true if app metadata meets the criteria
 func (t *License) Apply(app models.AppMetadata) bool {
 	if t == nil {
 		return true
@@ -175,10 +151,12 @@ func (t *License) Apply(app models.AppMetadata) bool {
 	return true
 }
 
+// Description filter
 type Description struct {
 	HasText string
 }
 
+// Apply returns true if app metadata meets the criteria
 func (d *Description) Apply(app models.AppMetadata) bool {
 	if d == nil {
 		return true
