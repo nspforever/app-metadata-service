@@ -3,7 +3,7 @@ BIN=$(strip $(MAIN_PKG))
 MOCKGEN=$(GOPATH)/bin/mockgen
 MOCK_DIR=$(CURDIR)/pkg/mocks
 
-GO_FILES=$(shell find . -type f -name '*.go' -not -path "./vendor/*")
+all: build test
 
 clean:
 	@rm -rf bin *.out
@@ -75,3 +75,4 @@ mock:
 						 -package=memory
 
 pre-checkin: fmt vet errors imports build test lint
+
