@@ -21,6 +21,10 @@ deps:
 	go mod download
 	go mod tidy
 
+install:
+	go mod tidy
+	go install ./...
+
 build: deps
 	go build -o bin/$(BIN) github.com/nspforever/$(MAIN_PKG)/cmd/server
 
@@ -78,4 +82,10 @@ mock:
 						 -package=memory
 
 pre-checkin: fmt vet errors imports build test lint
+
+docker:
+	docker build -t $(MAIN_PKG) .
+
+docker-run:
+	docker run -d -p 9999:9999 --rm --name app-metadata-service app-metadata-service:latest
 
