@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/golang/mock/gomock"
@@ -134,8 +136,10 @@ func TestUpsertApp(t *testing.T) {
 		})
 
 		Convey("Test validation against YAML payload", func() {
+			_, curPath, _, _ := runtime.Caller(0)
+			testDataPath := filepath.Join(filepath.Dir(curPath), "../../../", "test-data/invalid_apps.yaml")
+			yamlFile, err := ioutil.ReadFile(testDataPath)
 
-			yamlFile, err := ioutil.ReadFile("/Users/guannan.du/workspace/go/src/github.com/nspforever/app-metadata-service/test-data/invalid_apps.yaml")
 			So(err, ShouldBeNil)
 			dec := yaml.NewDecoder(bytes.NewBuffer(yamlFile))
 			var invalidAppNodes []yaml.Node
