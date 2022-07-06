@@ -74,4 +74,4 @@ mock:
 						 -destination=$(GOPATH)/src/github.com/nspforever/app-metadata-service/pkg/mocks/storage/memory/mock_apps_filters_applier.go \
 						 -package=memory
 
-pre-checkin: lint fmt vet errors imports build test
+pre-checkin: fmt vet errors imports build test lint

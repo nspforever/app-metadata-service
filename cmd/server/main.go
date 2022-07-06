@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/nspforever/app-metadata-service/pkg/http/rest"
 	"github.com/nspforever/app-metadata-service/pkg/searching"
 	"github.com/nspforever/app-metadata-service/pkg/storage/memory"
@@ -14,5 +16,7 @@ func main() {
 
 	// set up the HTTP server
 	hander := rest.NewHandler("localhost:9999", upserter, searcher)
-	hander.Run()
+	if err := hander.Run(); err != nil {
+		log.Fatal(err)
+	}
 }

@@ -2,6 +2,7 @@ package rest
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -16,7 +17,8 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 	"gopkg.in/yaml.v3"
 
-	//mocks_searching "github.com/nspforever/app-metadata-service/pkg/mocks/searching"
+	"github.com/nspforever/app-metadata-service/pkg/filtering/app"
+	mocks_searching "github.com/nspforever/app-metadata-service/pkg/mocks/searching"
 	mocks_upserting "github.com/nspforever/app-metadata-service/pkg/mocks/upserting"
 	"github.com/nspforever/app-metadata-service/pkg/models"
 )
@@ -105,7 +107,7 @@ func TestUpsertApp(t *testing.T) {
 					app:         app1,
 					err:         err,
 					errCond:     "an",
-					statusCode:  http.StatusOK,
+					statusCode:  http.StatusInternalServerError,
 				},
 				{
 					testName:    "Given another JSON payload",
@@ -114,7 +116,7 @@ func TestUpsertApp(t *testing.T) {
 					app:         app1,
 					err:         err,
 					errCond:     "an",
-					statusCode:  http.StatusOK,
+					statusCode:  http.StatusInternalServerError,
 				},
 			}
 
@@ -181,6 +183,95 @@ func TestUpsertApp(t *testing.T) {
 				So(err, ShouldBeNil)
 				So(string(bodyBytes), ShouldContainSubstring, errMsgs[i])
 			}
+		})
+	})
+}
+
+func TestSearchApps(t *testing.T) {
+	Convey("Test search apps", t, func() {
+		// Test Setup
+		ctrl := gomock.NewController(t)
+		defer ctrl.Finish()
+		searcher := mocks_searching.NewMockService(ctrl)
+		handler := NewHandler("localhost:9999", nil, searcher)
+		testingServer := httptest.NewServer(handler.router)
+		baseURL := testingServer.URL + "/apps"
+		defer testingServer.Close()
+		client := &http.Client{}
+
+		Convey("When searcher returns apps metadata", func() {
+			var app1 models.AppMetadata
+			yaml.Unmarshal([]byte(app1Yaml), &app1)
+
+			queryStr := "?title=Valid%20App1&version=0.0.1"
+			filters := &app.Filters{
+				Title: &app.Title{
+					Equal: "Valid App1",
+				},
+				Version: &app.Version{
+					Equal: "0.0.1",
+				},
+			}
+			req, err := http.NewRequest("GET", baseURL+queryStr, nil)
+			So(err, ShouldBeNil)
+
+			expectedRes := models.AppSearchResponse{
+				Count: 1,
+				Data:  []models.AppMetadata{app1},
+			}
+
+			searcher.EXPECT().SearchApps(filters).Return([]models.AppMetadata{app1}, nil).Times(1)
+			res, err := client.Do(req)
+			So(err, ShouldBeNil)
+			So(res.StatusCode, ShouldEqual, http.StatusOK)
+			bodyBytes, err := ioutil.ReadAll(res.Body)
+			defer res.Body.Close()
+			So(err, ShouldBeNil)
+			var resObj models.AppSearchResponse
+			json.Unmarshal(bodyBytes, &resObj)
+			So(resObj, ShouldResemble, expectedRes)
+		})
+		Convey("When searcher returns error", func() {
+			var app1 models.AppMetadata
+			yaml.Unmarshal([]byte(app1Yaml), &app1)
+
+			queryStr := "?title=Valid%20App1&version=0.0.1"
+			filters := &app.Filters{
+				Title: &app.Title{
+					Equal: "Valid App1",
+				},
+				Version: &app.Version{
+					Equal: "0.0.1",
+				},
+			}
+			req, err := http.NewRequest("GET", baseURL+queryStr, nil)
+			So(err, ShouldBeNil)
+			testErr := errors.New("test error")
+			searcher.EXPECT().SearchApps(filters).Return(nil, testErr).Times(1)
+			res, err := client.Do(req)
+			So(err, ShouldBeNil)
+			So(res.StatusCode, ShouldEqual, http.StatusNotFound)
+			bodyBytes, err := ioutil.ReadAll(res.Body)
+			defer res.Body.Close()
+			So(err, ShouldBeNil)
+			So(string(bodyBytes), ShouldContainSubstring, testErr.Error())
+		})
+		Convey("When unsuported filter is specified", func() {
+			var app1 models.AppMetadata
+			yaml.Unmarshal([]byte(app1Yaml), &app1)
+
+			queryStr := "?title1=Valid%20App1&version=0.0.1"
+
+			req, err := http.NewRequest("GET", baseURL+queryStr, nil)
+			So(err, ShouldBeNil)
+
+			res, err := client.Do(req)
+			So(err, ShouldBeNil)
+			So(res.StatusCode, ShouldEqual, http.StatusBadRequest)
+			bodyBytes, err := ioutil.ReadAll(res.Body)
+			defer res.Body.Close()
+			So(err, ShouldBeNil)
+			So(string(bodyBytes), ShouldContainSubstring, "title1: unsupported filter")
 		})
 	})
 }

@@ -34,8 +34,22 @@ func NewHandler(address string, upserter upserting.Service, searcher searching.S
 }
 
 // Run starts the http server
-func (h *Handler) Run() {
-	h.router.Run(h.address)
+func (h *Handler) Run() error {
+	return h.router.Run(h.address)
+}
+
+func (h *Handler) upsertApps(c *gin.Context) {
+	var newApp models.AppMetadata
+
+	if err := c.ShouldBind(&newApp); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "invalid app metadata " + err.Error()})
+		return
+	}
+	if err := h.upserter.UpsertApp(&newApp); err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	c.Status(http.StatusOK)
 }
 
 func (h *Handler) searchApps(c *gin.Context) {
@@ -57,18 +71,11 @@ func (h *Handler) searchApps(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, apps)
-}
-
-func (h *Handler) upsertApps(c *gin.Context) {
-	var newApp models.AppMetadata
-
-	if err := c.ShouldBind(&newApp); err != nil {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "invalid app metadata " + err.Error()})
-		return
-	}
-	h.upserter.UpsertApp(&newApp)
-	c.Status(http.StatusOK)
+	c.IndentedJSON(http.StatusOK,
+		&models.AppSearchResponse{
+			Count: len(apps),
+			Data:  apps,
+		})
 }
 
 func getFilters(params map[string]string) (filters *app.Filters, err error) {
