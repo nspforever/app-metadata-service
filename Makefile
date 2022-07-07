@@ -15,6 +15,7 @@ tools:
 	go get github.com/matm/gocov-html
 	go get github.com/tools/godep
 	go get github.com/mitchellh/gox
+	go get golang.org/x/lint/golint
 	go get github.com/golang/mock/mockgen@latest
 
 deps:
