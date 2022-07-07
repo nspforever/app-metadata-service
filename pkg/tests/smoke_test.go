@@ -17,7 +17,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const baseURL = "http://localhost:9999/apps"
+const baseURL = "http://localhost:9999/api/v1/apps"
 
 var apps = getAllApps()
 

@@ -63,7 +63,7 @@ func TestUpsertApp(t *testing.T) {
 		upserter := mocks_upserting.NewMockService(ctrl)
 		handler := NewHandler("localhost:9999", upserter, nil)
 		testingServer := httptest.NewServer(handler.router)
-		url := testingServer.URL + "/apps"
+		url := testingServer.URL + "/api/v1/apps"
 		defer testingServer.Close()
 		client := &http.Client{}
 
@@ -195,7 +195,7 @@ func TestSearchApps(t *testing.T) {
 		searcher := mocks_searching.NewMockService(ctrl)
 		handler := NewHandler("localhost:9999", nil, searcher)
 		testingServer := httptest.NewServer(handler.router)
-		baseURL := testingServer.URL + "/apps"
+		baseURL := testingServer.URL + "/api/v1/apps"
 		defer testingServer.Close()
 		client := &http.Client{}
 

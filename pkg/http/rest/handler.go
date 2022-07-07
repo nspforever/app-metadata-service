@@ -29,8 +29,9 @@ func NewHandler(address string, upserter upserting.Service, searcher searching.S
 		searcher: searcher,
 	}
 
-	h.router.GET("/apps", h.searchApps)
-	h.router.PUT("/apps", h.upsertApps)
+	h.router.GET("api/v1/apps", h.searchApps)
+	h.router.PUT("api/v1/apps", h.upsertApps)
+
 	return h
 }
 
