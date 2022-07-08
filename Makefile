@@ -9,7 +9,7 @@ clean:
 	@rm -rf bin *.out
 
 tools:
-	go get golang.org/x/tools/cmd/goimports
+	go install golang.org/x/tools/cmd/goimports@latest
 	go get github.com/kisielk/errcheck
 	go get github.com/axw/gocov/gocov
 	go get github.com/matm/gocov-html
