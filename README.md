@@ -139,9 +139,9 @@ make docker-run
 ## Populate the test data
 You can run below command to populate the test data
 ```
-curl -X PUT --data-binary @test-data/app1.yaml -H "Content-type: application/x-yaml" http://localhost:9999/apps
-curl -X PUT --data-binary @test-data/app2.yaml -H "Content-type: application/x-yaml" http://localhost:9999/apps
-curl -X PUT --data-binary @test-data/app3.yaml -H "Content-type: application/x-yaml" http://localhost:9999/apps
+curl -X PUT --data-binary @test-data/app1.yaml -H "Content-type: application/x-yaml" http://localhost:9999/api/v1/apps
+curl -X PUT --data-binary @test-data/app2.yaml -H "Content-type: application/x-yaml" http://localhost:9999/api/v1/apps
+curl -X PUT --data-binary @test-data/app3.yaml -H "Content-type: application/x-yaml" http://localhost:9999/api/v1/apps
 ```
 
 Or run:
@@ -151,17 +151,18 @@ make smoke-test
 
 ## Search apps
 ```
-curl localhost:9999/apps
+curl localhost:9999/api/v1/apps
 
-curl http://localhost:9999/apps\?title\=Valid%20App1
+curl http://localhost:9999/api/v1/apps\?title\=Valid%20App1
 
-curl http://localhost:9999/apps\?maintainer_has_email\=firstmaintainer%40hotmail.com\&company\=Random%20Inc\&license\=Apache-2.0
+curl http://localhost:9999/api/v1/apps\?maintainer_has_email\=firstmaintainer%40hotmail.com\&company\=Random%20Inc\&license\=Apache-2.0
 
 ```
 
 # Local Development
 
-- Clone the code git@github.com:nspforever/app-metadata-service.git
+- git clone https://github.com/nspforever/app-metadata-service
+- make tools
 - make build
 - make test
 - make pre-checkin
@@ -203,6 +204,11 @@ make run
   ```
   make smoke-test
   ```
+
+## Install go tools
+```
+make tools
+```
 
 ## Generate mocks
 ```
