@@ -1,13 +1,10 @@
+# API design
 
-# App Metadata Service
-
-## API design
-
-### Add/Modify App
+## Add/Modify App
 
 Add new app metadata or modify an existing app metadata. App metadata is unique identified by title@version. Supports both JSON and YAML as payload.
 
-#### **Request**
+### **Request**
 ```
 PUT  http://<hostname>:[port]/api/v1/apps
 ```
@@ -49,7 +46,7 @@ description: |
 }
 ```
 
-#### Response
+### Response
 
 **200 OK {}**
 
@@ -57,11 +54,12 @@ description: |
 
 **500 Internal Server Error {error message ...}**
 
-### Search apps
+
+## Search apps
 
 Search for apps metadata that previously created. Search criteria is specified by query parameters. The relationship between query parameters is 'AND'. If no query parameter is provied, all app metadata will be returned.
 
-#### Request
+### Request
 
 ```
 GET http://<hostname>:[port]/api/v1/apps?[query_params]
@@ -81,7 +79,7 @@ GET http://<hostname>:[port]/api/v1/apps?[query_params]
 |license|license=Apache-2.0|exact match the given string|
 |description_has_text|description_has_text=content|description has the given text|
 
-#### Response
+### Response
 
 **400 Bad request {error message ...}**
 
@@ -115,15 +113,53 @@ GET http://<hostname>:[port]/api/v1/apps?[query_params]
 }
 ```
 
+# Run the service
 
-## Local Development
+## Run the server
 
-- Go version 1.15+
+1. Run on local devbox with go environment
+
+```
+make run
+```
+
+2. alternatively run the service in docker
+
+```
+make docker-run
+```
+
+## Populate the test data
+You can run below command to populate the test data
+```
+curl -X PUT --data-binary @test-data/app1.yaml -H "Content-type: application/x-yaml" http://localhost:9999/apps
+curl -X PUT --data-binary @test-data/app2.yaml -H "Content-type: application/x-yaml" http://localhost:9999/apps
+curl -X PUT --data-binary @test-data/app3.yaml -H "Content-type: application/x-yaml" http://localhost:9999/apps
+```
+
+Or run:
+```
+make smoke-test
+```
+
+## Search apps
+```
+curl localhost:9999/apps
+
+curl http://localhost:9999/apps\?title\=Valid%20App1
+
+curl http://localhost:9999/apps\?maintainer_has_email\=firstmaintainer%40hotmail.com\&company\=Random%20Inc\&license\=Apache-2.0
+
+```
+
+# Local Development
+
 - Clone the code git@github.com:nspforever/app-metadata-service.git
 - make build
 - make test
+- make pre-checkin
 
-### Run unit tests
+## Run tests
 - Run all tests
 ```
 make test
@@ -144,46 +180,36 @@ make test-func P=<path-of-package> T=<test-function-name>
 # example: make test-func P=github.com/nspforever/app-metadata-service/pkg/storage/memory T=TestUpsertApp
 ```
 
-## Local E2E test
-
-
-### Run Server
+## Run Server
 ```
-cd cmd/server
-go run .
+make run
 ```
 
-### Add or modify app metadata
-- Return all apps if not filter is provided(unsafe)
-- Return apps by that meet the filter criteria
-- Relationship between filters are always 'AND'
-- Supported filters
-
-title eq
-version eq(gte, lte, gt, lt)
-maintainers has
-company eq
-website eq
-source eq
-license eq
-description has, eq
-
+## Run smoke test
 
 ```
-curl -X PUT --data-binary @test-data/app1.yaml -H "Content-type: application/x-yaml" http://localhost:9999/apps
+1. run the server
+2. make smoke-test
 ```
 
-### List apps
+## Generate mocks
 ```
-curl localhost:9999/apps
-
-curl http://localhost:9999/apps\?title\=Valid%20App1
-
-curl http://localhost:9999/apps\?maintainer_has_email\=firstmaintainer%40hotmail.com\&company\=Random%20Inc\&license\=Apache-2.0
-
+make mock
 ```
 
-### Future TODO
+## Collect code coverage data
+```
+make coverage
+```
+
+## Run pre-checkin validation
+Below command will run errcheck, goimports, go vet, go fmt, lint, build, test to the code quality
+```
+make pre-check
+```
+
+
+# Future TODOs
 - Validation on version number
 - Search by sematic version number
 - Add dependency injection

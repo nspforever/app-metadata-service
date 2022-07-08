@@ -87,6 +87,6 @@ pre-checkin: fmt vet errors imports build test lint
 docker:
 	docker build -t $(MAIN_PKG) .
 
-docker-run:
+docker-run: docker
 	docker run -d -p 9999:9999 --rm --name app-metadata-service app-metadata-service:latest
 
