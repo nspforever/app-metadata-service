@@ -1,6 +1,6 @@
 # API design
 
-## Add/Modify App
+## Add/Modify app metadata
 
 Add new app metadata or modify an existing app metadata. App metadata is unique identified by title@version. Supports both JSON and YAML as payload.
 
@@ -55,7 +55,7 @@ description: |
 **500 Internal Server Error {error message ...}**
 
 
-## Search apps
+## Search app metadata
 
 Search for apps metadata that previously created. Search criteria is specified by query parameters. The relationship between query parameters is 'AND'. If no query parameter is provied, all app metadata will be returned.
 
