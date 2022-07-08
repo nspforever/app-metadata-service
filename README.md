@@ -166,18 +166,19 @@ curl http://localhost:9999/apps\?maintainer_has_email\=firstmaintainer%40hotmail
   ```
 
 - **Run test of a specific package**
+  make test-package P=\<path-of-package>
 
   ```
-  make test-package P=<path-of-package>
-
   e.g. make test-package P=github.com/nspforever/app-metadata-service/pkg/storage/memory
   ```
 
 - **Run a specific test function**
 
+  make test-func P=\<path-of-package> T=\<test-function-name>
+
+  e.g.
   ```
-  make test-func P=<path-of-package> T=<test-function-name>
-  # example: make test-func P=github.com/nspforever/app-metadata-service/pkg/storage/memory T=TestUpsertApp
+  make test-func P=github.com/nspforever/app-metadata-service/pkg/storage/memory T=TestUpsertApp
   ```
 
 ## Run Server
@@ -211,7 +212,6 @@ Below command will run errcheck, goimports, go vet, go fmt, lint, build, test to
 ```
 make pre-check
 ```
-
 
 # Future TODOs
 - Validation on version number
