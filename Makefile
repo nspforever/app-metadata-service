@@ -12,9 +12,9 @@ tools:
 	go install golang.org/x/tools/cmd/goimports@latest
 	go install github.com/kisielk/errcheck@latest
 	go install github.com/axw/gocov/gocov@latest
-	go get github.com/matm/gocov-html
+	go install github.com/matm/gocov-html@latest
 	go install github.com/mitchellh/gox@latest
-	go get golang.org/x/lint/golint
+	go install golang.org/x/lint/golint@latest
 	go install github.com/golang/mock/mockgen@v1.6.0
 
 deps:
