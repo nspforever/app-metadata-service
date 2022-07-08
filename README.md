@@ -160,25 +160,25 @@ curl http://localhost:9999/apps\?maintainer_has_email\=firstmaintainer%40hotmail
 - make pre-checkin
 
 ## Run tests
-- Run all tests
-```
-make test
-```
+- **Run all tests**
+  ```
+  make test
+  ```
 
-- Run test of a specific package
+- **Run test of a specific package**
 
-```
-make test-package P=<path-of-package>
+  ```
+  make test-package P=<path-of-package>
 
-e.g. make test-package P=github.com/nspforever/app-metadata-service/pkg/storage/memory
-```
+  e.g. make test-package P=github.com/nspforever/app-metadata-service/pkg/storage/memory
+  ```
 
-- Run a specific test function
+- **Run a specific test function**
 
-```
-make test-func P=<path-of-package> T=<test-function-name>
-# example: make test-func P=github.com/nspforever/app-metadata-service/pkg/storage/memory T=TestUpsertApp
-```
+  ```
+  make test-func P=<path-of-package> T=<test-function-name>
+  # example: make test-func P=github.com/nspforever/app-metadata-service/pkg/storage/memory T=TestUpsertApp
+  ```
 
 ## Run Server
 ```
@@ -186,11 +186,15 @@ make run
 ```
 
 ## Run smoke test
+1. run the server in one terminal window or in docker
+  ```
+  make run
+  ```
 
-```
-1. run the server
-2. make smoke-test
-```
+2. Run the smoke tests
+  ```
+  make smoke-test
+  ```
 
 ## Generate mocks
 ```
