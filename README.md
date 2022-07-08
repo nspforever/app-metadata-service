@@ -116,9 +116,9 @@ GET http://<hostname>:[port]/api/v1/apps?[query_params]
 # Project organization
 The project is orgainzied by the **[hexagonal architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software))**. It aims at creating loosely coupled application components that can be easily connected to their software environment by means of ports and adapters. This makes components exchangeable at any level and facilitates test automation.
 
-The package and component design are closed following the **[SOLID principle ](https://dave.cheney.net/2016/08/20/solid-go-design)**
+The package and component design are closed following the **[SOLID principle ](https://dave.cheney.net/2016/08/20/solid-go-design)**.
 
-And the **[GoConvey](http://goconvey.co/)** test framework is used for creating comprehensive behavioral driven tests
+And the **[GoConvey](http://goconvey.co/)** test framework is used for creating comprehensive behavioral driven tests.
 
 # Run the service
 
