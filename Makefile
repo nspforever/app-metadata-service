@@ -10,13 +10,12 @@ clean:
 
 tools:
 	go install golang.org/x/tools/cmd/goimports@latest
-	go get github.com/kisielk/errcheck
-	go get github.com/axw/gocov/gocov
+	go install github.com/kisielk/errcheck@latest
+	go install github.com/axw/gocov/gocov@latest
 	go get github.com/matm/gocov-html
-	go get github.com/tools/godep
-	go get github.com/mitchellh/gox
+	go install github.com/mitchellh/gox@latest
 	go get golang.org/x/lint/golint
-	go get github.com/golang/mock/mockgen@latest
+	go install github.com/golang/mock/mockgen@v1.6.0
 
 deps:
 	go mod download
